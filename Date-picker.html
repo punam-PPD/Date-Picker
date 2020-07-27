@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Date Picker</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+</head>
+
+<body>
+    <div class="container">
+        <h3> Date Picker</h3>
+        From Date: <input type="text" id="date_picker1" size=9>
+        To Date: <input type="text" id="date_picker2" size=9>
+
+        <!-- <div id=date_selected></div> -->
+        <button id="getBetween">Get Between Dates</button>
+        <div id="results">
+
+        </div>
+    </div>
+
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js'></script>
+    <script>
+        $(document).ready(function () {
+            $("#date_picker1").datepicker({
+                dateFormat: 'dd-mm-yy'
+            })
+            $("#date_picker2").datepicker({
+                dateFormat: 'dd-mm-yy'
+            })
+            $('#getBetween').click(function () {
+                var start = $("#date_picker1").datepicker("getDate"),
+                    end = $("#date_picker2").datepicker("getDate"),
+                    currentDate = new Date(start),
+                    between = []
+                    ;
+
+                while (currentDate <= end) {
+                    between.push(new Date(currentDate));
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+
+                $(document).ready(function () {
+                    $("#results").html(between.map(function (value) {
+                        return $('#results:last').after('<div class="block">' + value + '<button class="remove">x</button></div>')
+                    }));
+                    $('.remove').click(function () {
+                        $(this).parent().remove();
+                        console.log(between)
+                    })
+                });
+
+
+            });
+
+
+        })
+
+    </script>
+    <style>
+        .remove {padding: 2px 6px;
+            margin: 2px 15px;
+            margin-left: 5%;
+            margin-left:20;
+        }
+        .block { 
+  height: 35px;
+  position: relative;
+  width: 470px;
+  border: 2px solid green; 
+}
+
+       
+    </style>
+</body>
+
+
+</html>
